@@ -1,7 +1,12 @@
 # -*- coding: utf-8 -*-
+import mysql.connector as mysql
 
 
-class Connection:
+def connection_db():
+    data_base = mysql.connect(
+        host="localhost",
+        database="almacen_sge",
+        user="root",
+        password="")
 
-    def create_connection(self):
-        pass
+    return data_base
