@@ -12,7 +12,6 @@ Example:
 Esto devuelve todo los datos almacenados en el almacen 2 
 
 Todo:
-    * OK--Invertir/Eliminar movimiento
     * Insertar productos en el almacen 2
     * Insertar componentes en el almacen 1
     * Insertar referencias de las 2 insercciones anteriores
@@ -43,7 +42,7 @@ def query_store_items1(data_base):
     for item in result_set:
         print(item)
 
-    data_base.close()
+    # data_base.close()
 
     return result_set
 
@@ -62,7 +61,7 @@ def query_store_items2(data_base):
     for item in result_set:
         print(item)
 
-    data_base.close()
+    # data_base.close()
 
     return result_set
 
@@ -79,10 +78,10 @@ def query_store_items1_code(data_base, code):
     cursor = data_base.cursor()
     cursor.execute("SELECT * FROM storage1 WHERE code=%s", code)
     result_set = list(cursor.fetchall())
-    for item in result_set:
-        print(item)
-
-    data_base.close()
+    # for item in result_set:
+    #     print(item)
+    #
+    # data_base.close()
 
     return result_set
 
@@ -99,17 +98,36 @@ def query_store_items2_code(data_base, code):
     cursor = data_base.cursor()
     cursor.execute("SELECT * FROM storage2 WHERE code=%s", code)
     result_set = list(cursor.fetchall())
+    # for item in result_set:
+    #     print(item)
+    #
+    # data_base.close()
+
+    return result_set
+
+
+def query_reference_table(data_base):
+    """Consultar la tabla de referencias de todos sus datos
+       Consulta los datos y los devuelve en forma lista los datos
+       Attributes:
+           data_base (mysql): Conexion a la base de datos
+       Returns:
+           Retorna una lista con los datos del tabla de referencias
+       """
+    cursor = data_base.cursor()
+    cursor.execute("SELECT * FROM reference_table")
+    result_set = list(cursor.fetchall())
     for item in result_set:
         print(item)
 
-    data_base.close()
+    # data_base.close()
 
     return result_set
 
 
 def query_reference_table_code(data_base, c2):
     """Consultar tabla de referencias por el c2
-    Consulta los datos y los devuelve en forma lista los datos    
+    Consulta los datos y los devuelve en forma lista los datos
     Attributes:
         data_base (mysql): Conexion a la base de datos
         c2 (int): codigo del almacen2
@@ -121,6 +139,25 @@ def query_reference_table_code(data_base, c2):
     result_set = list(cursor.fetchall())
     # for item in result_set:
     #     print(item)
+    return result_set
+
+
+def query_movement(data_base):
+    """Consultar los movimiento de todos sus datos
+       Consulta los datos y los devuelve en forma lista los datos
+       Attributes:
+           data_base (mysql): Conexion a la base de datos
+       Returns:
+           Retorna una lista con los datos de los movimientos
+       """
+    cursor = data_base.cursor()
+    cursor.execute("SELECT * FROM movement")
+    result_set = list(cursor.fetchall())
+    for item in result_set:
+        print(item)
+
+    # data_base.close()
+
     return result_set
 
 
@@ -188,5 +225,33 @@ def delete_movement(data_base, movement):
             cursor = data_base.cursor()
             cursor.execute("UPDATE storage1 SET quantity=quantity+%s WHERE code=%s",
                            (str(reference[1]), reference[0]))
+    data_base.commit()
+    data_base.close()
+
+
+def insert_store_item(data_base, store):
+    """Inserccion de un componente del almacen
+    Inserta un componente del almacen
+
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        store (Storage): Objeto que contiene los datos de la inserccion
+    """
+    cursor = data_base.cursor()
+    cursor.execute("INSERT INTO %s VALUES(%s, 0, %s)", (store.name_table, store.code, store.description))
+    data_base.commit()
+    data_base.close()
+
+
+def delete_store_item(data_base, store):
+    """Elimina un item del almacen
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        store (Storage): Objeto que contiene los datos de la inserccion
+    """
+
+    cursor = data_base.cursor()
+    cursor.execute("DELETE FROM %s WHERE code=%s", (store.name_table, store.code))
+
     data_base.commit()
     data_base.close()

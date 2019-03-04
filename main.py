@@ -2,4 +2,3 @@
 import src.view.menu as menu
 
 menu.start_menu()
-
