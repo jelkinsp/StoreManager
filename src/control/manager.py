@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import control.connection as connect
+import src.control.connection as connect
 
 """ Gestion de la base de datos
 Todas las consultas y modificaciones se realizan aqui.
@@ -12,7 +12,7 @@ Example:
 Esto devuelve todo los datos almacenados en el almacen 2 
 
 Todo:
-    * Invertir movimiento
+    * OK--Invertir/Eliminar movimiento
     * Insertar productos en el almacen 2
     * Insertar componentes en el almacen 1
     * Insertar referencias de las 2 insercciones anteriores
@@ -124,6 +124,23 @@ def query_reference_table_code(data_base, c2):
     return result_set
 
 
+def query_movement_code(data_base, c2):
+    """Consultar tabla de movimiento por el c2
+    Consulta los datos y los devuelve en forma lista los datos
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        c2 (int): codigo del almacen2
+    Returns:
+        Retorna una lista con los datos de la la table de referencias
+    """
+    cursor = data_base.cursor()
+    cursor.execute("SELECT quantity FROM movement WHERE c2=%s", (c2,))
+    result_set = list(cursor.fetchall())
+    # for item in result_set:
+    #     print(item)
+    return result_set
+
+
 def insert_movement(data_base, movement):
     """Inserccion de un movimiento
     Inserta un movimiento a la tabla, modifica la tabla del almacen 2 para sumanle la cantidad adquirida y
@@ -139,10 +156,37 @@ def insert_movement(data_base, movement):
     cursor.execute("UPDATE storage2 SET code=%s, quantity=quantity+%s WHERE code=%s",
                    (movement.c2, movement.quantity, movement.c2))
     referece_list = query_reference_table_code(data_base, movement.c2)
-    for i in range(movement.quantity):
+    for i in range(int(movement.quantity)):
         for reference in referece_list:
             cursor = data_base.cursor()
             cursor.execute("UPDATE storage1 SET quantity=quantity-%s WHERE code=%s",
+                           (str(reference[1]), reference[0]))
+    data_base.commit()
+    data_base.close()
+
+
+def delete_movement(data_base, movement):
+    """Elimina un movimiento
+    Elimina el movimiento de la tabla, modifica la tabla del almacen 2 para restarle la cantidad adquirida y
+    modifica la tabla del almacen 1 para sumarle los datos que se requieren en la construcion del producto
+
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        movement (Movement): Objeto que contiene los datos de la inserccion
+    """
+    aux = query_movement_code(data_base, movement.c2)
+    movement.quantity = str(aux[0])[10]
+    print(movement.quantity)
+    cursor = data_base.cursor()
+    cursor.execute("DELETE FROM movement WHERE c2=%s", (movement.c2,))
+    cursor = data_base.cursor()
+    cursor.execute("UPDATE storage2 SET code=%s, quantity=quantity-%s WHERE code=%s",
+                   (movement.c2, movement.quantity, movement.c2))
+    referece_list = query_reference_table_code(data_base, movement.c2)
+    for i in range(int(movement.quantity)):
+        for reference in referece_list:
+            cursor = data_base.cursor()
+            cursor.execute("UPDATE storage1 SET quantity=quantity+%s WHERE code=%s",
                            (str(reference[1]), reference[0]))
     data_base.commit()
     data_base.close()
