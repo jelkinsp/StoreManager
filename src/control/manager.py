@@ -11,10 +11,7 @@ Example:
 
 Esto devuelve todo los datos almacenados en el almacen 2 
 
-Todo:
-    * Insertar productos en el almacen 2
-    * Insertar componentes en el almacen 1
-    * Insertar referencias de las 2 insercciones anteriores
+Author: Jose Luis Luengo Ramos
 
 """
 
@@ -257,6 +254,7 @@ def delete_store_item1(data_base, store):
     data_base.commit()
     data_base.close()
 
+
 def insert_store_item2(data_base, store):
     """Inserccion de un componente del almacen
     Inserta un componente del almacen
@@ -294,10 +292,12 @@ def insert_referenece(data_base, reference):
         data_base (mysql): Conexion a la base de datos
         reference (Reference): Objeto que contiene los datos de la inserccion
     """
-
-    for c1 in reference.c1:
-        cursor = data_base.cursor()
-        cursor.execute("INSERT INTO reference_table VALUES(%s, %s, %s)", (reference.c2, c1, reference.quantity))
+    #
+    # for c1, quantity in reference.c1, reference.quantity:
+    #     cursor = data_base.cursor()
+    #     cursor.execute("INSERT INTO reference_table VALUES(%s, %s, %s)", (reference.c2, c1, quantity))
+    cursor = data_base.cursor()
+    cursor.execute("INSERT INTO reference_table VALUES(%s, %s, %s)", (reference.c2, reference.c1, reference.quantity))
 
     data_base.commit()
     data_base.close()
@@ -311,7 +311,7 @@ def delete_reference(data_base, reference):
     """
 
     cursor = data_base.cursor()
-    cursor.execute("DELETE FROM %s WHERE C2=%s", (reference.c2,))
+    cursor.execute("DELETE FROM reference_table WHERE C2=%s", (reference.c2,))
 
     data_base.commit()
     data_base.close()

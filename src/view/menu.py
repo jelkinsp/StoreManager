@@ -7,6 +7,7 @@ import src.control.manager as manager
 """Gestor del Menu
 Controla todas las entradas por teclado y las salidas por consola
 
+Author: Jose Luis Luengo Ramos
 """
 
 
@@ -17,65 +18,73 @@ def start_menu():
     print("----Gestor de Base de datos en Python----")
     loop = True
     while loop:
-        selection = input("""Seleccione una opcion
-        1- Mostrar almacen 1
-        2- Mostrar almacen 2
-        3- Mostrar movimiento
-        4- Mostrar tabla de referencias
-        5- Añadir un movimiento
-        6- Añadir componentes al almacen 1
-        7- Añadir productos al almacen 2
-        8- Añadir referencia
-        9- Eliminar movimiento
-        10- Eliminar referencia
-        11- Eliminar componentes al almacen 1
-        12- Elminar productos al almacen 2
-        13- Salir
-        """)
-        if selection == "1":
-            print("---- Mostrar almacen 1 ----")
-            manager.query_store_items1(manager.create_connection())
-        elif selection == "2":
-            print("---- Mostrar almacen 2 ----")
-            manager.query_store_items2(manager.create_connection())
-        elif selection == "3":
-            print("---- Mostrar movimiento ----")
-            manager.query_movement(manager.create_connection())
-        elif selection == "4":
-            print("---- Mostrar tabla de referencias ----")
-            manager.query_reference_table(manager.create_connection())
-        elif selection == "5":
-            print("---- Añadir un movimiento ----")
-            manager.insert_movement(manager.create_connection(), get_input_movement())
-        elif selection == "6":
-            print("---- Añadir componentes al almacen 1 ----")
-            manager.insert_store_item1(manager.create_connection(), get_input_store())
-        elif selection == "7":
-            print("---- Añadir productos al almacen 2 ----")
-            manager.insert_store_item2(manager.create_connection(), get_input_store())
-        elif selection == "8":
-            print("---- Añadir referencia ----")
-            manager.insert_referenece(manager.create_connection(), get_input_reference())
-        elif selection == "9":
-            print("---- Eliminar movimiento ----")
-            manager.delete_movement(manager.create_connection(), delete_input_movement())
-        elif selection == "10":
-            print("---- Eliminar referencia ----")
-            manager.delete_reference(manager.create_connection(), get_input_reference())
-        elif selection == "11":
-            print("---- Eliminar componentes al almacen 1 ----")
-            manager.delete_store_item1(manager.create_connection(), delete_input_storage())
-        elif selection == "12":
-            print("---- Elminar productos al almacen 2 ----")
-            manager.delete_store_item2(manager.create_connection(), delete_input_storage())
-        elif selection == "13":
-            print("Saliendo del programa...")
-            loop = False
-        else:
-            print("Has selecionado una opcion no disponible")
+        try:
+            selection = input("""Seleccione una opcion
+            1- Mostrar almacen 1
+            2- Mostrar almacen 2
+            3- Mostrar movimiento
+            4- Mostrar tabla de referencias
+            5- Añadir un movimiento
+            6- Añadir componentes al almacen 1
+            7- Añadir productos al almacen 2
+            8- Añadir referencia
+            9- Eliminar movimiento
+            10- Eliminar referencia
+            11- Eliminar componentes al almacen 1
+            12- Elminar productos al almacen 2
+            13- Salir
+            """)
+            if selection == "1":
+                print("---- Mostrar almacen 1 ----")
+                manager.query_store_items1(manager.create_connection())
+            elif selection == "2":
+                print("---- Mostrar almacen 2 ----")
+                manager.query_store_items2(manager.create_connection())
+            elif selection == "3":
+                print("---- Mostrar movimiento ----")
+                manager.query_movement(manager.create_connection())
+            elif selection == "4":
+                print("---- Mostrar tabla de referencias ----")
+                manager.query_reference_table(manager.create_connection())
+            elif selection == "5":
+                print("---- Añadir un movimiento ----")
+                manager.insert_movement(manager.create_connection(), get_input_movement())
+            elif selection == "6":
+                print("---- Añadir componentes al almacen 1 ----")
+                manager.insert_store_item1(manager.create_connection(), get_input_store())
+            elif selection == "7":
+                print("---- Añadir productos al almacen 2 ----")
+                manager.insert_store_item2(manager.create_connection(), get_input_store())
+            elif selection == "8":
+                print("---- Añadir referencia ----")
+                manager.insert_referenece(manager.create_connection(), get_input_reference())
+            elif selection == "9":
+                print("---- Eliminar movimiento ----")
+                manager.delete_movement(manager.create_connection(), delete_input_movement())
+            elif selection == "10":
+                print("---- Eliminar referencia ----")
+                manager.delete_reference(manager.create_connection(), delete_input_reference())
+            elif selection == "11":
+                print("---- Eliminar componentes al almacen 1 ----")
+                manager.delete_store_item1(manager.create_connection(), delete_input_storage())
+            elif selection == "12":
+                print("---- Elminar productos al almacen 2 ----")
+                manager.delete_store_item2(manager.create_connection(), delete_input_storage())
+            elif selection == "13":
+                print("Saliendo del programa...")
+                loop = False
+            else:
+                print("Has selecionado una opcion no disponible")
+        except Exception:
+            print("No puedes realizar esa accion")
 
 
 def get_input_movement():
+    """Crear un objeto Movement
+
+    Returns: El objeto relleno
+
+    """
     print("Introdece el codigo del productor del almacen 2(PC)")
     c2 = input()
     # c2 = "B0003"
@@ -87,6 +96,11 @@ def get_input_movement():
 
 
 def delete_input_movement():
+    """Crear un objeto Movement
+
+    Returns: El objeto relleno
+
+    """
     print("Introdece el codigo del productor del almacen 2(PC)")
     c2 = input()
     # c2 = "B0003"
@@ -94,6 +108,11 @@ def delete_input_movement():
 
 
 def get_input_store():
+    """Crear un objeto Store
+
+    Returns: El objeto relleno
+
+    """
     print("Introdece el codigo del almacen")
     code = input()
     # code = "B0003"
@@ -108,6 +127,11 @@ def get_input_store():
 
 
 def delete_input_storage():
+    """Crear un objeto Store
+    
+    Returns: El objeto relleno
+         
+    """
     print("Introdece el codigo del almacen que queires eliminar")
     code = input()
     # code = "B0003"
@@ -115,25 +139,33 @@ def delete_input_storage():
 
 
 def get_input_reference():
+    """Crear un objeto Reference
+
+    Returns: El objeto relleno
+
+    """
     print("Introdece el codigo del productor del almacen 2(PC)")
     c2 = input()
     # c2 = "B0003"
-    loop = True
-    c1 = list()
-    while loop:
-        print("Introdece el codigo del productor del almacen 1(Componentes)")
-        c1.append(input())
-        if input("Quieres añadir otro?(y/n)") == "n":
-            loop = False
+    # c1 = list()
+    # quantity = list()
+    print("Introdece el codigo del productor del almacen 1(Componentes)")
     # c1 = "B0003"
+    c1 = input()
+    # c1.append(input())
     print("Introdece la cantidad")
+    # quantity.append(input())
     quantity = input()
     # quantity = 3
-
     return reference.Reference(c2, c1, quantity)
 
 
 def delete_input_reference():
+    """Crear un objeto Reference
+
+       Returns: El objeto relleno
+
+       """
     print("Introdece el codigo del productor del almacen 2(PC)")
     c2 = input()
     # c2 = "B0003"

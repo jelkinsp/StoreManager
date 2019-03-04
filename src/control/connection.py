@@ -11,6 +11,9 @@ Example:
     
         $ import model.connection as connect
         $ cursor = connect.connection_db()
+        
+Author: Jose Luis Luengo Ramos
+
 """
 
 
