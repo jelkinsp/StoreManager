@@ -10,7 +10,7 @@ Proyecto para la gestion de un almacen de produccion.
 
 ### version
 
-* 0.0.0
+* 0.1.0
 
 ## ChangeLog
 
