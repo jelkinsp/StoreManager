@@ -8,6 +8,17 @@
 ## Descripción
 Proyecto para la gestion de un almacen de produccion.
 
+## Requisitos
+
+* Virtualenv
+
+    - Instalación previa a la ejecutacion:
+
+
+    (venv) [user@nameMachine StoreManager]$ pip install requirements.txt
+    
+
+
 ### version
 
 * 0.2.0
@@ -15,12 +26,19 @@ Proyecto para la gestion de un almacen de produccion.
 ## ChangeLog
 * 0.2.0
 
-    *
+    * Errores controlados y bugs resueltos
+    
+    * Terminado de implementar el resto de funcionalidades
+     faltan resolver bugs
 
+    * inserccion y eliminacion de las tablas de los almacenes
+    
+    * Creada la interfaz de consola con un menu
+    
 
 * 0.1.0
     
-    * añadidos las actualizaciones al README
+    * Añadidos las actualizaciones al README
 
     * Se ha completado la inserccion de en la tabla de movimiento, añadidos comentarios
 
