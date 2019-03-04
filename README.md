@@ -21,9 +21,14 @@ Proyecto para la gestion de un almacen de produccion.
 
 ### version
 
-* 0.2.0
+* 1.0.0
 
 ## ChangeLog
+* 0.3.0
+
+    * Ajustes README
+
+
 * 0.2.0
 
     * Errores controlados y bugs resueltos
