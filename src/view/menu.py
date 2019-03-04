@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import src.model.movement as movement
 import src.model.storage as storage
+import src.model.reference as reference
 import src.control.manager as manager
 
 """Gestor del Menu
@@ -48,25 +49,25 @@ def start_menu():
             manager.insert_movement(manager.create_connection(), get_input_movement())
         elif selection == "6":
             print("---- Añadir componentes al almacen 1 ----")
-            manager.insert_store_item(manager.create_connection(), get_input_store("storage1"))
+            manager.insert_store_item1(manager.create_connection(), get_input_store())
         elif selection == "7":
             print("---- Añadir productos al almacen 2 ----")
-            manager.insert_store_item(manager.create_connection(), get_input_store("storage2"))
+            manager.insert_store_item2(manager.create_connection(), get_input_store())
         elif selection == "8":
             print("---- Añadir referencia ----")
-
+            manager.insert_referenece(manager.create_connection(), get_input_reference())
         elif selection == "9":
             print("---- Eliminar movimiento ----")
             manager.delete_movement(manager.create_connection(), delete_input_movement())
         elif selection == "10":
             print("---- Eliminar referencia ----")
-            
+            manager.delete_reference(manager.create_connection(), get_input_reference())
         elif selection == "11":
             print("---- Eliminar componentes al almacen 1 ----")
-            manager.delete_store_item(manager.create_connection(), delete_input_storage("storage1"))
+            manager.delete_store_item1(manager.create_connection(), delete_input_storage())
         elif selection == "12":
             print("---- Elminar productos al almacen 2 ----")
-            manager.delete_store_item(manager.create_connection(), delete_input_storage("storage2"))
+            manager.delete_store_item2(manager.create_connection(), delete_input_storage())
         elif selection == "13":
             print("Saliendo del programa...")
             loop = False
@@ -92,22 +93,48 @@ def delete_input_movement():
     return movement.Movement(c2, 0)
 
 
-def get_input_store(name_table):
+def get_input_store():
     print("Introdece el codigo del almacen")
     code = input()
     # code = "B0003"
     print("Introdece la cantidad")
     quantity = input()
     # quantity = 3
-    print("Introdece la cantidad")
+    print("Introdece la descripcion")
     description = input()
     # description = "TEST"
 
-    return storage.Storage(code, quantity, description, name_table)
+    return storage.Storage(code, quantity, description)
 
 
-def delete_input_storage(name_table):
+def delete_input_storage():
     print("Introdece el codigo del almacen que queires eliminar")
     code = input()
     # code = "B0003"
-    return storage.Storage(code, 0, "", name_table)
+    return storage.Storage(code, 0, "")
+
+
+def get_input_reference():
+    print("Introdece el codigo del productor del almacen 2(PC)")
+    c2 = input()
+    # c2 = "B0003"
+    loop = True
+    c1 = list()
+    while loop:
+        print("Introdece el codigo del productor del almacen 1(Componentes)")
+        c1.append(input())
+        if input("Quieres añadir otro?(y/n)") == "n":
+            loop = False
+    # c1 = "B0003"
+    print("Introdece la cantidad")
+    quantity = input()
+    # quantity = 3
+
+    return reference.Reference(c2, c1, quantity)
+
+
+def delete_input_reference():
+    print("Introdece el codigo del productor del almacen 2(PC)")
+    c2 = input()
+    # c2 = "B0003"
+    return reference.Reference(c2, 0, 0)

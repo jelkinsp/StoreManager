@@ -229,7 +229,7 @@ def delete_movement(data_base, movement):
     data_base.close()
 
 
-def insert_store_item(data_base, store):
+def insert_store_item1(data_base, store):
     """Inserccion de un componente del almacen
     Inserta un componente del almacen
 
@@ -238,12 +238,13 @@ def insert_store_item(data_base, store):
         store (Storage): Objeto que contiene los datos de la inserccion
     """
     cursor = data_base.cursor()
-    cursor.execute("INSERT INTO %s VALUES(%s, 0, %s)", (store.name_table, store.code, store.description))
+    cursor.execute("INSERT INTO storage1 VALUES(%s, %s, %s)",
+                   (store.code, store.quantity, store.description))
     data_base.commit()
     data_base.close()
 
 
-def delete_store_item(data_base, store):
+def delete_store_item1(data_base, store):
     """Elimina un item del almacen
     Attributes:
         data_base (mysql): Conexion a la base de datos
@@ -251,7 +252,66 @@ def delete_store_item(data_base, store):
     """
 
     cursor = data_base.cursor()
-    cursor.execute("DELETE FROM %s WHERE code=%s", (store.name_table, store.code))
+    cursor.execute("DELETE FROM storage1 WHERE code=%s", (store.code,))
+
+    data_base.commit()
+    data_base.close()
+
+def insert_store_item2(data_base, store):
+    """Inserccion de un componente del almacen
+    Inserta un componente del almacen
+
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        store (Storage): Objeto que contiene los datos de la inserccion
+    """
+    cursor = data_base.cursor()
+    cursor.execute("INSERT INTO storage2 VALUES(%s, %s, %s)",
+                   (store.code, store.quantity, store.description))
+    data_base.commit()
+    data_base.close()
+
+
+def delete_store_item2(data_base, store):
+    """Elimina un item del almacen
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        store (Storage): Objeto que contiene los datos de la inserccion
+    """
+
+    cursor = data_base.cursor()
+    cursor.execute("DELETE FROM storage2 WHERE code=%s", (store.code,))
+
+    data_base.commit()
+    data_base.close()
+
+
+def insert_referenece(data_base, reference):
+    """Inserccion de una referencia
+    Inserta un referencia para la creacion de los productos del almacen 2
+
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        reference (Reference): Objeto que contiene los datos de la inserccion
+    """
+
+    for c1 in reference.c1:
+        cursor = data_base.cursor()
+        cursor.execute("INSERT INTO reference_table VALUES(%s, %s, %s)", (reference.c2, c1, reference.quantity))
+
+    data_base.commit()
+    data_base.close()
+
+
+def delete_reference(data_base, reference):
+    """Eliminacion de una referencia
+    Attributes:
+        data_base (mysql): Conexion a la base de datos
+        reference (Reference): Objeto que contiene los datos de la inserccion
+    """
+
+    cursor = data_base.cursor()
+    cursor.execute("DELETE FROM %s WHERE C2=%s", (reference.c2,))
 
     data_base.commit()
     data_base.close()
