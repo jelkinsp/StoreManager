@@ -15,6 +15,8 @@ Proyecto para la gestion de un almacen de produccion.
 ## ChangeLog
 
 * 0.1.0
+    
+    *Update README
 
     * Se ha completado la inserccion de en la tabla de movimiento, añadidos comentarios
 

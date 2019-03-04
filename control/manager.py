@@ -9,7 +9,14 @@ Example:
     
         $ query_store_items2(create_connection())
 
-Esto devuelve todo los datos almacenados en el almacen 2
+Esto devuelve todo los datos almacenados en el almacen 2 
+
+Todo:
+    * Invertir movimiento
+    * Insertar productos en el almacen 2
+    * Insertar componentes en el almacen 1
+    * Insertar referencias de las 2 insercciones anteriores
+
 """
 
 
